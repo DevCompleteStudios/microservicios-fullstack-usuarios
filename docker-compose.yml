@@ -1,18 +1,18 @@
 version: "3.7"
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: fullstack-usuarios
     restart: always
     environment:
-      MYSQL_DATABASE: 'usuarios'
+      MYSQL_DATABASE: 'db_microservicios_examenes'
       MYSQL_USER: 'admin'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - '3308:3306'
     expose:
-      - '3306'
+      - '3308'
     volumes:
       - mysql-db:/var/lib/mysql
 volumes:
