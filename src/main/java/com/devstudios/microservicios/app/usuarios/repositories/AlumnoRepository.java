@@ -2,7 +2,8 @@ package com.devstudios.microservicios.app.usuarios.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.devstudios.microservicios.app.usuarios.models.Alumno;
+import com.microservicio.commons.alumnos.models.entities.Alumno;
+
 
 
 

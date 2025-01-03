@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devstudios.microservicios.app.commons.controllers.CommonController;
-import com.devstudios.microservicios.app.usuarios.models.Alumno;
 import com.devstudios.microservicios.app.usuarios.services.AlumnoService;
+import com.microservicio.commons.alumnos.models.entities.Alumno;
 
 
 
