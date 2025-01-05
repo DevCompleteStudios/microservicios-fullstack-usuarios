@@ -1,8 +1,11 @@
 package com.devstudios.microservicios.app.usuarios.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,13 +16,17 @@ import com.devstudios.microservicios.app.commons.controllers.CommonController;
 import com.devstudios.microservicios.app.usuarios.services.AlumnoService;
 import com.microservicio.commons.alumnos.models.entities.Alumno;
 
+import jakarta.validation.Valid;
+
 
 
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService> {
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update( @PathVariable Long id, @RequestBody Alumno alumno ){
+    public ResponseEntity<?> update( @PathVariable Long id, @Valid @RequestBody Alumno alumno, BindingResult result ){
+        if( result.hasErrors() ) return validar(result);
+
         // validar actualizaciones
         Optional<Alumno> alumnoOptional = service.findById(id);
         if(alumnoOptional.isEmpty()){
@@ -38,6 +45,16 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService> {
     @GetMapping("/filtrar/{name}")
     public ResponseEntity<?> searchAlumnosByName(@PathVariable String name){
         return ResponseEntity.ok(this.service.searchAlumnosByName(name));
+    }
+
+    
+    protected ResponseEntity<?> validar( BindingResult response ){
+        Map<String, Object> res = new HashMap<>();
+
+        response.getFieldErrors()
+            .forEach(e -> res.put(e.getField(), e.getDefaultMessage()));
+
+        return ResponseEntity.badRequest().body(res);
     }
 
 }
